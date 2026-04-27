@@ -1,0 +1,9 @@
+{
+  "PactlyModule#PactlyEscrowImpl": "0x9ecB31489ef05849a30bF2C9923168695216f36F",
+  "PactlyModule#PactlyReputationImpl": "0xD9a9f22638d7E9c05BD86681Ef39c3d79a59F341",
+  "PactlyModule#PactlyTreasury": "0xf44EF985268976a768cE8Cf1514ddbd7A5EA4F2B",
+  "PactlyModule#PactlyReputationProxy": "0xd04B4a606061f5a4b2fA1a803c6e2C7A97F003D9",
+  "PactlyModule#PactlyReputation": "0xd04B4a606061f5a4b2fA1a803c6e2C7A97F003D9",
+  "PactlyModule#PactlyEscrowProxy": "0xfEEEe5d95dEedc1DEACbE82D9115701464ddd3D4",
+  "PactlyModule#PactlyEscrow": "0xfEEEe5d95dEedc1DEACbE82D9115701464ddd3D4"
+}

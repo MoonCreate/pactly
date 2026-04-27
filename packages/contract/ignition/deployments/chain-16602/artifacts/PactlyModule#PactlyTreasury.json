@@ -1,0 +1,37 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "PactlyTreasury",
+  "sourceName": "contracts/PactlyTreasury.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Slashed",
+      "type": "event"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "bytecode": "0x6080604052348015600e575f5ffd5b50607980601a5f395ff3fe608060405236603f5760405134815233907f4ed05e9673c26d2ed44f7ef6a7f2942df0ee3b5e1e17db4b99f9dcd261a339cd9060200160405180910390a2005b5f5ffdfea2646970667358221220e0bc427ee27dd132379c4ad06b2fcadb3d385b30cc8d0de2deb8bcc97ac3445364736f6c634300081c0033",
+  "deployedBytecode": "0x608060405236603f5760405134815233907f4ed05e9673c26d2ed44f7ef6a7f2942df0ee3b5e1e17db4b99f9dcd261a339cd9060200160405180910390a2005b5f5ffdfea2646970667358221220e0bc427ee27dd132379c4ad06b2fcadb3d385b30cc8d0de2deb8bcc97ac3445364736f6c634300081c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/PactlyTreasury.sol",
+  "buildInfoId": "solc-0_8_28-7f735c99e2f2535c9db1a04dd5a2b6fadde130f6"
+}
