@@ -5,24 +5,27 @@ Production: **https://love.goon4.site**
 ## Architecture
 
 ```
-                          [ Internet :443 ]
-                                  │
-                                  ▼
-                   [ Nginx — love.goon4.site ]
-                   │ TLS (Let's Encrypt, auto-renew)
-                   │
-   ┌──────────────┴────────────────┐
-   │                                │
-   │  /api/*  ─►  127.0.0.1:3001    │   pactly-backend.service
-   │             (path strip /api)  │   Bun + tRPC
-   │                                │
-   │  /assets/* /favicon.ico ...    │   served from
-   │   (static)                     │   packages/frontend/dist/client
-   │                                │
-   │  / (everything else) ─►        │   pactly-frontend.service
-   │   127.0.0.1:3000               │   Bun + TanStack Start SSR
-   └────────────────────────────────┘
+                       [ Internet :443 ]
+                              │
+              ┌───────────────┴────────────────┐
+              ▼                                ▼
+  [ Nginx — love.goon4.site ]      [ Nginx — be-love.goon4.site ]
+  │ TLS (Let's Encrypt)            │ TLS (Let's Encrypt)
+  │                                │
+  │ /assets/*  /favicon.ico        │ proxy_pass → 127.0.0.1:3001
+  │   serve static from            │     pactly-backend.service
+  │   packages/frontend/dist/client│     Bun + tRPC
+  │                                │     endpoints:
+  │ /  (everything else) ──►       │       /health
+  │   127.0.0.1:3000               │       /trpc/<procedure>
+  │     pactly-frontend.service    │       /storage/blob/<rootHash>
+  │     Bun + TanStack Start SSR   │
+  └────────────────────────────────┘
 ```
+
+**URLs:**
+- Frontend (browser-facing): `https://love.goon4.site`
+- Backend (called by frontend, also externally reachable): `https://be-love.goon4.site`
 
 **Server:** `root@84.247.148.107` (Ubuntu 24.04)
 **Repo on server:** `/var/www/pactly`
@@ -90,7 +93,7 @@ gh workflow run Deploy --repo MoonCreate/pactly --ref main
 ```
 
 Keys currently set:
-- `VITE_PACTLY_API_URL=https://love.goon4.site/api` — backend URL the browser hits
+- `VITE_PACTLY_API_URL=https://be-love.goon4.site` — backend URL the browser hits (no `/api` prefix; the tRPC client appends `/trpc` itself)
 - `VITE_REOWN_PROJECT_ID` — Reown WalletConnect project ID
 
 ## Checking logs
@@ -149,8 +152,10 @@ certbot renew --dry-run                           # verify cert renewal
 | Frontend SSR launcher | `/var/www/pactly/packages/frontend/serve.ts` |
 | Built static assets | `/var/www/pactly/packages/frontend/dist/client/` |
 | systemd units | `/etc/systemd/system/pactly-{backend,frontend}.service` |
-| Nginx site | `/etc/nginx/sites-available/love.goon4.site` |
-| TLS cert | `/etc/letsencrypt/live/love.goon4.site/` |
+| Nginx site (frontend) | `/etc/nginx/sites-available/love.goon4.site` |
+| Nginx site (backend) | `/etc/nginx/sites-available/be-love.goon4.site` |
+| TLS cert (frontend) | `/etc/letsencrypt/live/love.goon4.site/` |
+| TLS cert (backend) | `/etc/letsencrypt/live/be-love.goon4.site/` |
 | Server's GitHub deploy key (read-only) | `/root/.ssh/id_ed25519` |
 
 ## Notes
